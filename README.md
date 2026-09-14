@@ -1,7 +1,6 @@
 # SentinelAI — Academic Code Package
 
 **Project:** SentinelAI: Prompt Injection Firewall for LLM Applications  
-**Deadline:** 10 September 2026  
 **Model:** TF-IDF (50,000 features) + Logistic Regression  
 **Accuracy:** 94.40% | F1: 94.25% | ROC-AUC: 98.67%
 
