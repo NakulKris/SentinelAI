@@ -1,0 +1,29 @@
+# Python / Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.env
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Large Datasets (>100MB exceeds GitHub hard limit)
+data/processed/*.csv
+data/raw/
+*.csv
+*.tsv
+*.parquet
+*.zip
+*.tar.gz
+
+# System / IDE
+.vscode/
+.idea/
+.DS_Store
+*.log

@@ -1,0 +1,47 @@
+{
+  "dataset_name": "SentinelAI Prompt Injection Dataset",
+  "sources": [
+    "Neuralchemy/Prompt-injection-dataset",
+    "Cyberec/Prompt-injection-dataset",
+    "hlynlabs/prompt-injection-judge-deberta-dataset"
+  ],
+  "original_integrated_records": 408523,
+  "duplicate_records_removed": 8782,
+  "final_unique_records": 399741,
+  "current_preprocessed_records": 399741,
+  "columns": [
+    "text",
+    "label",
+    "category",
+    "source",
+    "severity",
+    "group_id",
+    "augmented",
+    "tags",
+    "clean_text",
+    "tokens",
+    "processed_text"
+  ],
+  "num_columns": 11,
+  "target_variable": "label",
+  "target_encoding": {
+    "0": "Benign",
+    "1": "Malicious"
+  },
+  "text_feature_for_ml": "processed_text",
+  "missing_values": {
+    "severity": 397091,
+    "group_id": 395350,
+    "tags": 395350,
+    "clean_text": 18,
+    "processed_text": 27
+  },
+  "duplicate_raw_text_rows": 0,
+  "duplicate_processed_text_rows": 2313,
+  "benign_count": 203067,
+  "malicious_count": 196674,
+  "excluded_rows_for_modeling": 27,
+  "exclusion_reason": "processed_text is NaN or empty after NLP pipeline \u2014 no TF-IDF features possible",
+  "final_ml_ready_rows": 399714,
+  "note_on_features": "The dataset has 11 columns. These are NOT the ML features. ML features are TF-IDF term frequencies derived from processed_text. The number of TF-IDF features is determined by max_features parameter at training time."
+}

@@ -1,0 +1,155 @@
+==============================================================
+SENTINELAI — PPT CODE SNIPPETS
+Prompt Injection Firewall for LLM Applications
+==============================================================
+Each snippet below fits on a single presentation slide.
+Use monospace font (e.g. Courier New 16pt) in your slides.
+==============================================================
+
+
+--------------------------------------------------------------
+SNIPPET 1 — DATA LOADING
+(Slide: Dataset Description)
+--------------------------------------------------------------
+
+import pandas as pd
+
+# Load the integrated prompt-injection dataset
+df = pd.read_csv("data/processed/SentinelAI_Preprocessed_Dataset.csv")
+
+print(df.shape)          # (399741, 11)
+print(df["label"].value_counts().sort_index())
+# 0    203067  <- Benign    (full dataset, before exclusion)
+# 1    196674  <- Malicious (full dataset, before exclusion)
+
+# Exclude 27 rows where processed_text is empty after NLP pipeline
+df_ml = df[df["processed_text"].fillna("").str.strip() != ""]
+print(len(df_ml))        # 399714 (ML-ready)
+# ML-ready: Benign=203054, Malicious=196660
+
+
+--------------------------------------------------------------
+SNIPPET 2 — NLP PREPROCESSING PIPELINE
+(Slide: Data Preprocessing)
+--------------------------------------------------------------
+
+import re, string, nltk
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
+
+STOP_WORDS = set(stopwords.words("english"))
+LEMMATIZER = WordNetLemmatizer()
+
+def preprocess_text(text):
+    text = text.lower()
+    text = re.sub(r"https?://\S+", " ", text)   # remove URLs
+    text = re.sub(r"<[^>]+>", " ", text)         # remove HTML
+    text = re.sub(r"\S+@\S+", " ", text)         # remove emails
+    text = re.sub(r"\b\d+\b", " ", text)          # remove numbers
+    text = text.translate(                         # remove punctuation
+        str.maketrans("", "", string.punctuation))
+    tokens = word_tokenize(text)
+    tokens = [LEMMATIZER.lemmatize(t)
+              for t in tokens
+              if t.isalpha() and t not in STOP_WORDS]
+    return " ".join(tokens)
+
+# Example:
+# Input : "Ignore all previous instructions!"
+# Output: "ignore previous instruction"
+
+
+--------------------------------------------------------------
+SNIPPET 3 — LABEL DISTRIBUTION (EDA)
+(Slide: EDA / Data Preprocessing)
+--------------------------------------------------------------
+
+import matplotlib.pyplot as plt
+
+counts = df_ml["label"].value_counts().sort_index()
+
+plt.bar(["Benign (0)", "Malicious (1)"],
+        [counts[0], counts[1]],
+        color=["#2ecc71", "#e74c3c"])
+plt.title("Label Distribution — SentinelAI Dataset")
+plt.xlabel("Class")
+plt.ylabel("Number of Prompts")
+plt.savefig("figures/01_label_distribution.png", dpi=150)
+
+# Benign   : 203,054  (50.8%)
+# Malicious: 196,660  (49.2%)
+
+
+--------------------------------------------------------------
+SNIPPET 4 — TF-IDF FEATURE EXTRACTION
+(Slide: ML Algorithm / Feature Engineering)
+--------------------------------------------------------------
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+vectorizer = TfidfVectorizer(
+    max_features = 50000,   # top 50,000 terms
+    ngram_range  = (1, 2),  # unigrams + bigrams
+    sublinear_tf = True,    # log(1 + tf)
+    min_df       = 2,
+    max_df       = 0.95,
+    analyzer     = "word"
+)
+
+# Fit ONLY on training data (no data leakage)
+X_train_tfidf = vectorizer.fit_transform(X_train)
+X_test_tfidf  = vectorizer.transform(X_test)
+
+# Result: 50,000 TF-IDF features per prompt
+
+
+--------------------------------------------------------------
+SNIPPET 5 — LOGISTIC REGRESSION
+(Slide: Model Training)
+--------------------------------------------------------------
+
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(
+    C            = 1.0,     # regularisation
+    solver       = "saga",  # large sparse matrices
+    max_iter     = 1000,
+    random_state = 42
+)
+
+# Train on training partition only
+model.fit(X_train_tfidf, y_train)
+
+# Classes: 0 = Benign, 1 = Malicious
+print(model.classes_)   # [0 1]
+
+
+--------------------------------------------------------------
+SNIPPET 6 — MODEL EVALUATION
+(Slide: Model Evaluation / Results)
+--------------------------------------------------------------
+
+from sklearn.metrics import (accuracy_score, precision_score,
+    recall_score, f1_score, roc_auc_score, confusion_matrix)
+
+y_pred = model.predict(X_test_tfidf)
+y_prob = model.predict_proba(X_test_tfidf)[:, 1]
+
+print(f"Accuracy  : {accuracy_score(y_test, y_pred)*100:.2f}%")
+print(f"Precision : {precision_score(y_test, y_pred)*100:.2f}%")
+print(f"Recall    : {recall_score(y_test, y_pred)*100:.2f}%")
+print(f"F1-score  : {f1_score(y_test, y_pred)*100:.2f}%")
+print(f"ROC-AUC   : {roc_auc_score(y_test, y_prob)*100:.2f}%")
+
+# RESULTS:
+# Accuracy  : 94.40%
+# Precision : 95.01%
+# Recall    : 93.51%
+# F1-score  : 94.25%
+# ROC-AUC   : 98.67%
+#
+# Confusion Matrix:
+#   TN=38770  FP=1928
+#   FN=2550   TP=36721
+

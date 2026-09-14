@@ -1,0 +1,212 @@
+/* SentinelAI — Prompt Injection Firewall  */
+/* Clean, dark-cyber theme suited for academic PPT screenshots */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0d1117;
+  --surface:   #161b22;
+  --border:    #30363d;
+  --accent:    #58a6ff;
+  --text-main: #e6edf3;
+  --text-muted:#8b949e;
+  --green:     #2ecc71;
+  --red:       #e74c3c;
+  --yellow:    #f39c12;
+  --radius:    10px;
+  --shadow:    0 4px 24px rgba(0,0,0,0.4);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ─────────────────────────────────────────────────────────────── */
+header {
+  background: linear-gradient(135deg, #0d1117 0%, #1c2333 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 32px;
+}
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.shield { font-size: 2.4rem; }
+header h1 {
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+.tagline {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ── MAIN ────────────────────────────────────────────────────────────────── */
+main {
+  flex: 1;
+  max-width: 860px;
+  width: 100%;
+  margin: 32px auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* ── CARD ────────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 30px;
+  box-shadow: var(--shadow);
+}
+.card h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+.sub {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+/* ── TEXTAREA ────────────────────────────────────────────────────────────── */
+textarea {
+  width: 100%;
+  background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-main);
+  font-size: 0.92rem;
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  padding: 12px 14px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+  line-height: 1.55;
+}
+textarea:focus { border-color: var(--accent); }
+textarea::placeholder { color: var(--text-muted); }
+
+/* ── BUTTONS ─────────────────────────────────────────────────────────────── */
+.btn-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px 24px;
+  transition: opacity 0.15s, transform 0.1s;
+}
+button:active { transform: scale(0.98); }
+#analyzeBtn {
+  background: var(--accent);
+  color: #000;
+  flex: 1;
+}
+#analyzeBtn:disabled { opacity: 0.55; cursor: not-allowed; }
+.clear-btn {
+  background: var(--border);
+  color: var(--text-muted);
+  padding: 10px 18px;
+}
+.clear-btn:hover { background: #40464f; }
+
+/* ── RESULT CARD ─────────────────────────────────────────────────────────── */
+.result-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.header-ben { background: rgba(46,204,113,0.12); border: 1px solid rgba(46,204,113,0.35); }
+.header-mal { background: rgba(231, 76, 60, 0.12); border: 1px solid rgba(231,76,60,0.35); }
+
+.verdict-icon { font-size: 2.4rem; }
+.result-header h2 { font-size: 1.6rem; font-weight: 700; }
+.header-ben h2 { color: var(--green); }
+.header-mal h2 { color: var(--red); }
+.result-header p  { font-size: 0.87rem; color: var(--text-muted); margin-top: 3px; }
+
+/* ── METRICS ─────────────────────────────────────────────────────────────── */
+.metrics-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.metric-box {
+  flex: 1;
+  background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.metric-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.metric-value { font-size: 1.4rem; font-weight: 700; color: var(--text-main); }
+.action-allow { color: var(--green); }
+.action-block  { color: var(--red); }
+
+/* ── PROCESSED TEXT ──────────────────────────────────────────────────────── */
+.processed-section {
+  background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.proc-label {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 6px;
+}
+.proc-text {
+  font-family: 'Cascadia Code', 'Fira Code', monospace;
+  font-size: 0.82rem;
+  color: #79c0ff;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
+/* ── ERROR CARD ──────────────────────────────────────────────────────────── */
+.error-card {
+  border-color: rgba(231,76,60,0.4);
+  background: rgba(231,76,60,0.07);
+  color: #ff7b72;
+  font-size: 0.92rem;
+}
+
+/* ── FOOTER ──────────────────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  text-align: center;
+  padding: 14px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
