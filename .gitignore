@@ -13,7 +13,7 @@ ENV/
 # Jupyter Notebooks
 .ipynb_checkpoints/
 
-# Large Datasets (>100MB exceeds GitHub hard limit)
+# Large Datasets (>100MB — exceeds GitHub hard limit)
 data/processed/*.csv
 data/raw/
 *.csv
@@ -21,6 +21,10 @@ data/raw/
 *.parquet
 *.zip
 *.tar.gz
+
+# Neural model weights (downloaded locally via setup_neural.py — ~500 MB)
+# Run `python setup_neural.py` once after cloning to restore
+models/neural/
 
 # System / IDE
 .vscode/

@@ -1,3 +1,10 @@
+# ── Deep Semantic Mode (Tier 2) — install separately if needed ────────────
+# pip install torch --index-url https://download.pytorch.org/whl/cpu
+# pip install transformers
+torch
+transformers
+
+# ── Core ──────────────────────────────────────────────────────────────────
 anyio==4.14.2
 blinker==1.9.0
 Flask==3.1.3

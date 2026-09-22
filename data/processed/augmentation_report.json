@@ -1,0 +1,29 @@
+{
+  "original_rows": 399741,
+  "combined_rows": 399786,
+  "new_rows_added": 45,
+  "sources": {
+    "deepset/prompt-injections": {
+      "downloaded": 537,
+      "dupes_removed": 535,
+      "added": 2,
+      "malicious": 2,
+      "benign": 0
+    },
+    "JasperLS/prompt-injections": {
+      "downloaded": 537,
+      "dupes_removed": 537,
+      "added": 0,
+      "malicious": 0,
+      "benign": 0
+    },
+    "rubend18/ChatGPT-Jailbreak-Prompts": {
+      "downloaded": 79,
+      "dupes_removed": 36,
+      "added": 43,
+      "malicious": 43,
+      "benign": 0
+    }
+  },
+  "elapsed_seconds": 50.2
+}

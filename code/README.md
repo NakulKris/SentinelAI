@@ -14,8 +14,8 @@
 | `02_eda.py` | Generate all 5 EDA figures (label, category, severity, char-length, word-count) | Derived from `run_ml_pipeline.py` Steps 3–4 |
 | `03_train_model.py` | Leakage-free train/test split, TF-IDF fit, LR training, save artifacts | Derived from `retrain_leakage_free.py` (final authoritative training run) |
 | `04_evaluate_model.py` | Reload saved model, independently recalculate and verify metrics | Derived from `sentinelai_qa.py` Check 6 |
-| `05_flask_app.py` | Flask web application — inference pipeline and web routes | Derived from `app/app.py` (with documentation expanded) |
-| `ppt_code_snippets.txt` | Short slide-ready code blocks for presentation | New — condensed from above files |
+| `app/app.py` | Flask web application — inference pipeline and web routes (Dual-Mode: Fast/Deep/Hybrid) | Production app |
+| `ppt_code_snippets.txt` | Short slide-ready code blocks for presentation | Condensed reference |
 
 ---
 
@@ -145,7 +145,7 @@ LogisticRegression(
 
 ## Technical Note: UI Terminology
 
-The Flask application (`05_flask_app.py`) displays **"SAFE"** in the web
+The Flask application (`app/app.py`) displays **"SAFE"** in the web
 interface when the model predicts class 0 (Benign). This is a
 **presentation-layer change only**. The model, dataset labels, and all
 evaluation metrics use the original `0 = Benign / 1 = Malicious` encoding.
